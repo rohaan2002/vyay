@@ -9,7 +9,7 @@ const userTypeDef=`#graphql
     }
 
     type Query{
-        users:  [User!]
+        # users:  [User!] #we dont want to see all users in any query, this was just for testing
         authUser:  User
         user(userId: ID!):  User
     }  
