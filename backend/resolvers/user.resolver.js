@@ -81,12 +81,18 @@ const userResolver={
                 return user
             }catch(err){
                 console.error("Error occured in authUser", err);
-                throw new Error(err.message||"Internal server error")
+                throw new Error(err.message||"Internal server error, in authUser")
             }
         },
 
-        user: (_, {userId})=>{
-            return users.find((user)=> userId===user._id)
+        user: async(_, {userId})=>{
+           try{
+            const user = await User.findById(userId);
+            return user;
+           }catch(err){
+            console.log("Error occured in user query", err);
+            throw new Error(err.message||"Internal server error, in user (resolver)")
+           }
         },
     },
 }

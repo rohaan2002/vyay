@@ -14,7 +14,7 @@ export const configurePassport =async()=>{
 
     passport.deserializeUser(async(id,done)=>{
       try{
-        const user = await User.findById(d);   //It takes the serialized user data (usually the user's ID) stored in the session and retrieves the corresponding user object from the database or any other data source.
+        const user = await User.findById(id);   //It takes the serialized user data (usually the user's ID) stored in the session and retrieves the corresponding user object from the database or any other data source.
         done(null,user)
       }  catch(err){
         done(err);

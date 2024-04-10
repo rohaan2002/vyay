@@ -8,9 +8,9 @@
 // date: String!
 
 import mongoose from 'mongoose';
-import User from './user.model';
+import User from './user.model.js';
 
-const transactionSchema = new mongoose.model({
+const transactionSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User,

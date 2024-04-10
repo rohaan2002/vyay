@@ -40,7 +40,8 @@ app.use(
     cookie: {
       maxAge: 1000*60*60*24*7,  //7days in milliseconds
       httpOnly: true //prevents cross site scripting attack(XSS)
-    }
+    },
+    store:store
   })
 )
 
@@ -52,7 +53,7 @@ app.use(passport.session());
 const server = new ApolloServer({
     typeDefs: mergedTypeDefs, 
     resolvers: mergedResolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],  //helps in shutting down the server gracefully - straight outta docs
 });
 
 // Ensure we wait for our server to start
@@ -64,7 +65,7 @@ app.use(
   '/',
   cors({
     origin: "http://localhost:5173",
-    credentials: true
+    credentials: true  //When credentials is set to true, it means that the request can include user credentials (such as cookies, HTTP authentication, or client-side SSL certificates) when making a cross-origin request. 
   }),
   express.json(),
   // expressMiddleware accepts the same arguments:
