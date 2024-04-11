@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.vyay-thematic {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to left, #6cade6, #1bd067);
+    color: greenyellow; 
+    
+    font-family: "Bungee Spice", sans-serif;
+
+}
+
