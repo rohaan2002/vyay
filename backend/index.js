@@ -62,7 +62,7 @@ await server.start();
 // Set up our Express middleware to handle CORS, body parsing,
 // and our expressMiddleware function.
 app.use(
-  '/',
+  "/graphql",
   cors({
     origin: "http://localhost:5173",
     credentials: true  //When credentials is set to true, it means that the request can include user credentials (such as cookies, HTTP authentication, or client-side SSL certificates) when making a cross-origin request. 
@@ -79,5 +79,5 @@ app.use(
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 await connectDB();
 
-console.log(`🚀 Server ready at http://localhost:4000/`);
+console.log(`🚀 Server ready at http://localhost:4000/graphql`);
 

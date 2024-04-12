@@ -1,5 +1,4 @@
-import {users} from './../dummyData/data.js'
-import User from './../typeDefs/user.typedef.js'
+import User from './../models/user.model.js'
 import bcrypt from 'bcryptjs'
 const userResolver={
     Mutation:{
@@ -44,6 +43,7 @@ const userResolver={
         login: async(_,{input},context)=>{
             try{
                 const {username, password} = input;
+                if(!username|| !password) throw new Error("All fields are required!")
                 const {user}= await context.authenticate("graphql-local",{username, password})
 
                 await context.login(user)
@@ -58,11 +58,11 @@ const userResolver={
            
             try{
                 await context.logout();
-                req.session.destroy((err)=>{
+                context.req.session.destroy((err)=>{
                     if(err) throw err;
                 })
             
-            res.clearCookie("connect.sid");
+            context.res.clearCookie("connect.sid");
             return {message: "Logged Out Succesfully"}
             }catch(err){
                 console.error("Error occured in logout", err);
@@ -77,7 +77,7 @@ const userResolver={
         // },
         authUser: async(_,__,context)=>{
             try{
-                const user = context.getUser();
+                const user = await context.getUser();
                 return user
             }catch(err){
                 console.error("Error occured in authUser", err);
