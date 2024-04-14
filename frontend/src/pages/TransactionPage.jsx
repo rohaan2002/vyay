@@ -1,20 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState} from "react";
+import {Navigate, useNavigate, useParams} from 'react-router-dom'
 import TransactionFormSkeleton from "../components/skeletons/TransactionFormSkeletons";
-TransactionFormSkeleton
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
+import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
+import Toast from 'react-hot-toast';
+
+
+
 const TransactionPage = () => {
-	const [formData, setFormData] = useState({
-		description: "",
-		paymentType: "",
-		category: "",
-		amount: "",
-		location: "",
-		date: "",
+
+	const navigate = useNavigate();
+	
+	const{id}=useParams(); // 'id' bola h kyuki App.jsx ke routes m dekho '/transaction/:id' path pe transaction ka page khulra
+	// console.log(id);
+
+	const{data, loading, error}=useQuery(GET_TRANSACTION,{
+		variables: {id:id}
 	});
+
+	// console.log("transaction data from card: ", data);
+
+const [updateTransaction, {loading: loadingUpdate}] = useMutation(UPDATE_TRANSACTION)
+
+	const [formData, setFormData] = useState({
+		description: data?.transaction.description,
+		paymentType: data?.transaction.paymentType,
+		category: data?.transaction.category,
+		amount: data?.transaction.amount,
+		location: data?.transaction.location,
+		date: data?.transaction.date,
+	});
+
+	
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log("formData", formData);
+		const amount = parseFloat(formData.amount); //bcz the amount in formData would update using setFormData from input, and input always gives a string value. 
+		try{
+			await updateTransaction({
+				variables:{
+					input: {
+						...formData,
+						amount,
+						transactionId: id
+					}
+				}
+			})
+
+			Toast.success("Transaction updated successfully!")
+
+			navigate('/');
+
+			
+		}catch(error){
+			Toast.error(error.message);
+		}
 	};
+
+
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setFormData((prevFormData) => ({
@@ -23,6 +67,18 @@ const TransactionPage = () => {
 		}));
 	};
   
+	useEffect(()=>{
+		if(data){
+		setFormData({
+			description: data?.transaction.description,
+			paymentType: data?.transaction.paymentType,
+			category: data?.transaction.category,
+			amount: data?.transaction.amount,
+			location: data?.transaction.location,
+			date: new Date(+data.transaction.date).toISOString().substr(0,10), //converts the string timestamp value to DD/MM/YYYY format
+		})
+	}
+	},[data])
 
 	// if (loading) return <TransactionFormSkeleton />;
 
@@ -178,9 +234,9 @@ const TransactionPage = () => {
 				<button
 					className=' h-12 text-white font-bold w-full rounded px-4 py-2 bg-gradient-to-br
           from-pink-500 to-pink-500 hover:from-pink-600 hover:to-pink-600'
-					type='submit'
+					type='submit' disabled={loadingUpdate}
 				>
-					Update Transaction
+					{loadingUpdate? "Updating...": "Update Transaction" }
 				</button>
 			</form>
 		</div>
