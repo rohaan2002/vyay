@@ -10,10 +10,17 @@ const transactionTypeDef= `#graphql
         date: String!
     }
 
+    type CategoryStatistics{
+        category: String!
+        totalAmount: Float!
+    }
+
+
     type Query{
         transactions: [Transaction!]
         transaction(transactionId: ID!): Transaction  
-        # Todo -> categoryStatistics query  
+        categoryStatistics: [CategoryStatistics!] 
+        # The categoryStatistics query is expected to return an array of CategoryStatistics objects, each containing a category (String) and totalAmount (Float).
     }
 
     type Mutation{

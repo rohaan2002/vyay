@@ -9,8 +9,11 @@ import { GiMoneyStack } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import formatMongoTimestamp from "../utils/formatDate.js";
 import Toast from 'react-hot-toast';
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_TRANSACTION } from "../graphql/mutations/transaction.mutation.js";
+import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
+
+// import { GET_AUTHENTICATED_USER } from "../graphql/mutations/user.query.js";
 
 
 const categoryColorMap = {
@@ -30,7 +33,9 @@ const Card = ({transaction }) => {
 	category = category[0].toUpperCase()+ category.slice(1);
 	
 	const [deleteTransaction, {loading}]=useMutation(DELETE_TRANSACTION, 
-	{refetchQueries: ["GetTransactions"]});
+	{refetchQueries: ["GetTransactions", "GetTransactionStatistics"]});
+
+	const {data: authUserData}=useQuery(GET_AUTHENTICATED_USER)
 
 	const handleDelete=async()=>{
 		try{
@@ -78,7 +83,7 @@ const Card = ({transaction }) => {
 				<div className='flex justify-between items-center'>
 					<p className='text-xs text-gray-300 font-bold'>{formattedDate}</p>
 					<img
-						src={"https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
+						src={authUserData?.authUser.profilePic}
 						className='h-8 w-8 border rounded-full'
 						alt=''
 					/>

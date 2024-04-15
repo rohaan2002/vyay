@@ -5,41 +5,125 @@ import Cards from "../components/Cards";
 import TransactionForm from "../components/TransactionForm";
 
 import { MdLogout } from "react-icons/md";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { LOGOUT } from "../graphql/mutations/user.mutation";
 import Toast from 'react-hot-toast';
+import { GET_TRANSACTION_STATISTICS } from "../graphql/queries/transaction.query";
+import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
+import { useEffect, useState } from "react";
+
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
-	const chartData = {
-		labels: ["Saving", "Expense", "Investment"],
-		datasets: [
-			{
-				label: "%",
-				data: [13, 8, 3],
-				backgroundColor: ['rgb(255, 99, 132)',
-        'rgb(60, 228, 222)',
-        'rgb(255, 205, 86)'],
-				borderColor: ['rgb(255, 99, 132)',
-        'rgb(60, 228, 222)',
-        'rgb(255, 205, 86)'],
-				borderWidth: 1,
-				borderRadius: 0,
-				spacing: 10,
-				cutout: 110,
-        hoverOffset: 8
-			},
-      
-		],
-	};
-const [logout, {loading}]	=useMutation(LOGOUT,{
-	refetchQueries: ["GetAuthenticatedUser"]
 
-})
+	const {data, loadingStatistics}=useQuery(GET_TRANSACTION_STATISTICS)
+
+	const {data: authUserData}=useQuery(GET_AUTHENTICATED_USER)
+
+	const [logout, {loading, client}]	=useMutation(LOGOUT,{
+		refetchQueries: ["GetAuthenticatedUser"]
+	
+	})                                               
+
+const [chartData, setChartData] = useState({
+	labels: [],
+	datasets: [
+		{
+			label: "$",
+			data: [],
+			backgroundColor: [],
+			borderColor: [],
+			borderWidth: 1,
+			borderRadius: 0,
+			spacing: 10,
+			cutout: 110,
+    hoverOffset: 8
+		},
+  
+	],
+});
+
+// useEffect(()=>{
+// 	if(data?.categoryStatistics){
+// 	const categories = data.categoryStatistics.map((stat)=> stat.category);	 //ese kch btaya ni h ki kaha jayega mapped data to apne aap array m store hote jata h.
+// 	const totalAmounts = data.categoryStatistics.map((stat)=> stat.totalAmount);	
+
+// 	const backgroundColors=[];
+// 	const borderColors =[];
+
+// 	categories.forEach(category => {
+// 		if (category === "saving") {
+// 			backgroundColors.push("rgba(75, 192, 192)");
+// 			borderColors.push("rgba(75, 192, 192)");
+// 		} else if (category === "expense") {
+// 			backgroundColors.push("rgba(255, 99, 132)");
+// 			borderColors.push("rgba(255, 99, 132)");
+// 		} else if (category === "investment") {
+// 			backgroundColors.push("rgba(54, 162, 235)");
+// 			borderColors.push("rgba(54, 162, 235)");
+// 		}
+
+// 	})
+
+// 	setChartData(prev=>({
+		
+// 				label: categories,
+// 				datasets:[
+// 					{
+// 						...prev.datasets[0],
+// 						data:totalAmounts,
+// 						backgroundColor: backgroundColors,
+// 						borderColor: borderColors
+// 					}
+// 				]
+			
+// 	}))
+// 	}
+// },[data])
+
+useEffect(() => {
+	if (data?.categoryStatistics) {
+		const categories = data.categoryStatistics.map((stat) => stat.category);
+		const totalAmounts = data.categoryStatistics.map((stat) => stat.totalAmount);
+
+		const backgroundColors = [];
+		const borderColors = [];
+
+		categories.forEach((category) => {
+			if (category === "saving") {
+				backgroundColors.push("rgba(75, 192, 192)");
+				borderColors.push("rgba(75, 192, 192)");
+			} else if (category === "expense") {
+				backgroundColors.push("rgba(255, 99, 132)");
+				borderColors.push("rgba(255, 99, 132)");
+			} else if (category === "investment") {
+				backgroundColors.push("rgba(54, 162, 235)");
+				borderColors.push("rgba(54, 162, 235)");
+			}
+		});
+
+		setChartData((prev) => ({
+			labels: categories,
+			datasets: [
+				{
+					...prev.datasets[0],
+					data: totalAmounts,
+					backgroundColor: backgroundColors,
+					borderColor: borderColors,
+				},
+			],
+		}));
+	}
+}, [data]);
+
+	// console.log("category statistics: ", data);
+
 	const handleLogout = async() => {
 		try{
 			await logout();
+			client.resetStore();
 		}catch(error){
 			console.error("Error logging out: ", error.message);
 			Toast.error(error.message)
@@ -55,7 +139,7 @@ const [logout, {loading}]	=useMutation(LOGOUT,{
 						Spend wisely, track wisely
 					</p>
 					<img
-						src={"https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
+						src={authUserData?.authUser.profilePic}
 						className='w-11 h-11 rounded-full border cursor-pointer'
 						alt='Avatar'
 					/>

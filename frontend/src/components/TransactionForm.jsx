@@ -5,7 +5,7 @@ const TransactionForm = () => {
 	
 	const [createTransaction]	=useMutation(CREATE_TRANSACTION, 
 	{
-		refetchQueries: ["GetTransactions"]
+		refetchQueries: ["GetTransactions","GetTransactionStatistics"]
 	})
 
 	const handleSubmit = async (e) => {

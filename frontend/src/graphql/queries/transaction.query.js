@@ -27,3 +27,13 @@ export const GET_TRANSACTION = gql`
 		}
 	}
 `;
+
+// #category or us category ka total amount kitna h ye in an array return karega  
+export const GET_TRANSACTION_STATISTICS = gql `
+	query GetTransactionStatistics{ 
+		categoryStatistics{
+				category
+				totalAmount
+		}
+	}
+`
