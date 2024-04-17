@@ -2,14 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-.vyay-thematic {
+.vyay-logo-thematic {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    background-image: linear-gradient(to left, #6cade6, #1bd067);
+    /* background-image: linear-gradient(to left, #6cade6, #1bd067); */
     color: greenyellow; 
     
     font-family: "Bungee Spice", sans-serif;
 
 }
 
+.vyay-thematic {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to left, #6cade6, #1bd067);
+    font-family: Righteous, sans-serif;
+    /* -webkit-text-stroke-width: 0.0001px;
+    -webkit-text-stroke-color: rgb(57, 57, 57); */
+  }

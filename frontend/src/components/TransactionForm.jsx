@@ -41,13 +41,13 @@ const TransactionForm = () => {
 			<div className='flex flex-wrap'>
 				<div className='w-full'>
 					<label
-						className='block uppercase tracking-wide text-white text-xs font-bold mb-2'
+						className='block text-center uppercase tracking-wide text-white text-xs font-bold mb-2'
 						htmlFor='description'
 					>
 						Transaction
 					</label>
 					<input
-						className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+						className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200  py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 rounded-[200px] h-[3.2rem]'
 						id='description'
 						name='description'
 						type='text'
@@ -60,14 +60,14 @@ const TransactionForm = () => {
 			<div className='flex flex-wrap gap-3'>
 				<div className='w-full flex-1 mb-6 md:mb-0'>
 					<label
-						className='block uppercase tracking-wide text-white text-xs font-bold mb-2'
+						className='block text-center uppercase tracking-wide text-white text-xs font-bold mb-2'
 						htmlFor='paymentType'
 					>
 						Payment Type
 					</label>
 					<div className='relative'>
 						<select
-							className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+							className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-[200px] h-[3.2rem] leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 							id='paymentType'
 							name='paymentType'
 						>
@@ -90,14 +90,14 @@ const TransactionForm = () => {
 				{/* CATEGORY */}
 				<div className='w-full flex-1 mb-6 md:mb-0'>
 					<label
-						className='block uppercase tracking-wide text-white text-xs font-bold mb-2'
+						className='block text-center uppercase tracking-wide text-white text-xs font-bold mb-2'
 						htmlFor='category'
 					>
 						Category
 					</label>
 					<div className='relative'>
 						<select
-							className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+							className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded-[200px] h-[3.2rem] leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 							id='category'
 							name='category'
 						>
@@ -119,11 +119,11 @@ const TransactionForm = () => {
 
 				{/* AMOUNT */}
 				<div className='w-full flex-1 mb-6 md:mb-0'>
-					<label className='block uppercase text-white text-xs font-bold mb-2' htmlFor='amount'>
+					<label className='block text-center uppercase text-white text-xs font-bold mb-2' htmlFor='amount'>
 						Amount(₹)
 					</label>
 					<input
-						className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+						className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded-[200px] h-[3.2rem] py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
 						id='amount'
 						name='amount'
 						type='number'
@@ -136,13 +136,13 @@ const TransactionForm = () => {
 			<div className='flex flex-wrap gap-3'>
 				<div className='w-full flex-1 mb-6 md:mb-0'>
 					<label
-						className='block uppercase tracking-wide text-white text-xs font-bold mb-2'
+						className='block text-center uppercase tracking-wide text-white text-xs font-bold mb-2'
 						htmlFor='location'
 					>
 						Location
 					</label>
 					<input
-						className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
+						className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded-[200px] h-[3.2rem] py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white'
 						id='location'
 						name='location'
 						type='text'
@@ -152,14 +152,14 @@ const TransactionForm = () => {
 
 				{/* DATE */}
 				<div className='w-full flex-1'>
-					<label className='block uppercase tracking-wide text-white text-xs font-bold mb-2' htmlFor='date'>
+					<label className='block text-center uppercase tracking-wide text-white text-xs font-bold mb-2' htmlFor='date'>
 						Date
 					</label>
 					<input
 						type='date'
 						name='date'
 						id='date'
-						className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-[11px] px-4 mb-3 leading-tight focus:outline-none
+						className='appearance-none block w-full bg-gray-200 text-gray-700 border  rounded-[200px] h-[3.2rem] py-[11px] px-4 mb-3 leading-tight focus:outline-none
 						 focus:bg-white'
 						placeholder='Select date'
 					/>
@@ -167,7 +167,7 @@ const TransactionForm = () => {
 			</div>
 			{/* SUBMIT BUTTON */}
 			<button
-				className='text-white font-bold w-full rounded px-4 py-2 h-12 bg-gradient-to-br
+				className='text-white font-bold w-full rounded-[15px] h-[3.2rem] px-4 py-2 bg-gradient-to-br
           from-pink-500 to-pink-500 hover:from-pink-600 hover:to-pink-600
 						disabled:opacity-70 disabled:cursor-not-allowed'
 				type='submit'

@@ -1,11 +1,31 @@
 import { Link } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_AUTHENTICATED_USER } from "../../graphql/queries/user.query.js"
+import { LOGOUT } from "../../graphql/mutations/user.mutation";
+import { MdLogout } from "react-icons/md";
 
 import VyayLogo from "./vyayLogo.jsx";
 
 
 const Header = () => {
+	const {data: authUserData}=useQuery(GET_AUTHENTICATED_USER)
+	
+	
+
+
 	return (
-		<div className='mb-14'>
+		<div className='mb-14 relative'>
+
+					<img
+						src={authUserData?.authUser.profilePic}
+						className='w-14 h-14 rounded-full border cursor-pointer absolute top-7 left-7'
+						alt='Avatar'
+					/>
+
+				
+				
+			
+					
 			{/* <div className='md:text-6xl text-5xl lg:text-8xl font-bold text-center  relative z-50 vyay-thematic'>
 				 <Link to='/'><div className="flex flex-row items-center justify-center relative">
 					
